@@ -1,13 +1,9 @@
 package com.will.filesearcher.file_searcher;
 
-import android.os.Environment;
 import android.os.Handler;
 import android.os.Looper;
 
-import com.will.Stardust.bean.Book;
-
 import java.io.File;
-import java.util.List;
 
 /**
  * Created by will on 2016/10/29.
@@ -15,18 +11,17 @@ import java.util.List;
 
 public class FileSearcher {
     private Callback mCallback;
-    private List<Book> list;
     private Handler handler;
-    public FileSearcher(List<Book> list,Callback callback){
-        this.list = list;
+    private boolean stopSearching;
+    public FileSearcher(Callback callback){
         mCallback = callback;
         handler = new Handler(Looper.getMainLooper());
     }
-    public void startSearch(){
+    public void startSearch(final File dir, final String keyword){
         new Thread(new Runnable() {
             @Override
             public void run() {
-                searchTXTFile(Environment.getExternalStorageDirectory());
+                searchFile(dir,keyword);
                 if(mCallback != null){
                    handler.post(new Runnable() {
                        @Override
@@ -40,7 +35,18 @@ public class FileSearcher {
     }
 
 
-    private void searchTXTFile(final File dir){
+    private void searchFile(final File dir, String keyword){
+        if(stopSearching){
+            if(mCallback != null){
+               handler.post(new Runnable() {
+                   @Override
+                   public void run() {
+                       mCallback.onFinish();
+                   }
+               });
+            }
+            return;
+        }
         if(mCallback != null){
             handler.post(new Runnable() {
                 @Override
@@ -51,23 +57,25 @@ public class FileSearcher {
         }
         for(final File file : dir.listFiles()){
             if(!file.isDirectory()){
-                if(file.getName().toUpperCase().contains(".TXT")){
+                if(file.getName().toUpperCase().contains(keyword.toUpperCase())){
                     handler.post(new Runnable() {
                         @Override
                         public void run() {
-                            list.add(new Book(file.getName(),file.getPath()));
-                            mCallback.onFind();
+                            mCallback.onFind(file);
                         }
                     });
                 }
             }else{
-                searchTXTFile(file);
+                searchFile(file,keyword);
             }
         }
     }
     public interface Callback {
         void onSearch(String pathName);
-        void onFind();
+        void onFind(File file);
         void onFinish();
+    }
+    public void stopSearching(boolean which){
+        stopSearching = which;
     }
 }

@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">FileSearcher</string>
+    <string name="search_finish">Search Completed</string>
+    <string name="searching">Searching Directory : </string>
+    <string name="confirm">Confirm</string>
+    <string name="cancel">Cancel</string>
+    <string name="dialog_message">Quit Searching?</string>
+    <string name="select_all">select all</string>
+    <string name="done">done</string>
+    <string name="no_result">No Result Found</string>
 </resources>

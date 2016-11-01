@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">FileSearcher</string>
+    <string name="search_finish">搜索完成</string>
+    <string name="searching">正在搜索目录 : </string>
+    <string name="cancel">取消</string>
+    <string name="confirm">确定</string>
+    <string name="dialog_message">放弃搜索？</string>
+    <string name="no_result">未发现符合条件的文件</string>
+</resources>
