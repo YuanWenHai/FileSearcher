@@ -78,7 +78,7 @@ public class FileSearcherActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.toolbar_menu,menu);
+        getMenuInflater().inflate(R.menu.file_searcher_toolbar_menu,menu);
         return true;
     }
 
@@ -87,7 +87,7 @@ public class FileSearcherActivity extends AppCompatActivity {
         if(mAdapter.isSearching()){
             return true;
         }
-        if(item.getItemId() == R.id.toolbar_menu_done){
+        if(item.getItemId() == R.id.file_searcher_toolbar_menu_done){
             ArrayList<File> selectedData = (ArrayList<File>) mAdapter.getSelectedItems();
             if(selectedData.size() == 0){
                 setResult(NO_DATA_SELECTED);
