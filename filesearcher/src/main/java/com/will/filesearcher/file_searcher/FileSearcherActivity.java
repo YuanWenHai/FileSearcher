@@ -31,8 +31,8 @@ public class FileSearcherActivity extends AppCompatActivity {
     protected void onCreate( Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.file_searcher_main);
-        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.main_recycler_view);
-        TextView text = (TextView) findViewById(R.id.main_text);
+        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.file_searcher_main_recycler_view);
+        TextView text = (TextView) findViewById(R.id.file_searcher_main_text);
         mAdapter = new FSAdapter(this,text);
         recyclerView.setAdapter(mAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));

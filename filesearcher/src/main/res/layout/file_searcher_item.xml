@@ -9,7 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <TextView
-            android:id="@+id/item_text"
+            android:id="@+id/file_searcher_item_text"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -18,7 +18,7 @@
             android:textColor="@color/black"
             tools:text="abcde.text"/>
         <CheckBox
-            android:id="@+id/item_check_box"
+            android:id="@+id/file_searcher_item_check_box"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"/>

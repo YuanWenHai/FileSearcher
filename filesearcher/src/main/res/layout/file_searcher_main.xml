@@ -12,23 +12,22 @@
     <android.support.v7.widget.Toolbar
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:id="@+id/main_toolbar"
+        android:id="@+id/file_searcher_main_toolbar"
         app:contentInsetStart="0dp"
         android:background="?attr/colorPrimary">
         <TextView
-            android:id="@+id/main_text"
+            android:id="@+id/file_searcher_main_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-
             android:maxLines="1"
-            android:textColor="#ffffff"
+            android:textColor="?attr/actionMenuTextColor"
             android:textSize="18sp"
             tools:text="正在搜索目录: abcde"/>
     </android.support.v7.widget.Toolbar>
 
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/main_recycler_view"
+        android:id="@+id/file_searcher_main_recycler_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:scrollbars="vertical"/>
