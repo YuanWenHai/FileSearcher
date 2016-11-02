@@ -66,7 +66,7 @@ public class FSAdapter extends RecyclerView.Adapter<FSAdapter.FSViewHolder> {
 
     @Override
     public FSViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.item,parent,false);
+        View view = LayoutInflater.from(context).inflate(R.layout.file_searcher_item,parent,false);
         return new FSViewHolder(view);
     }
 
