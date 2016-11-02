@@ -42,7 +42,7 @@ public class FileSearcherActivity extends AppCompatActivity {
         }
         mAdapter.startSearch(Environment.getExternalStorageDirectory(),keyword);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.main_toolbar);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.file_searcher_main_toolbar);
         toolbar.setTitle("");
         toolbar.setNavigationIcon(R.drawable.ic_arrow_back_white_24dp);
         setSupportActionBar(toolbar);
