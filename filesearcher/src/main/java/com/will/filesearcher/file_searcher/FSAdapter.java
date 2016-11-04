@@ -66,7 +66,7 @@ public class FSAdapter extends RecyclerView.Adapter<FSAdapter.FSViewHolder> {
 
     @Override
     public FSViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.item,parent,false);
+        View view = LayoutInflater.from(context).inflate(R.layout.file_searcher_item,parent,false);
         return new FSViewHolder(view);
     }
 
@@ -86,8 +86,8 @@ public class FSAdapter extends RecyclerView.Adapter<FSAdapter.FSViewHolder> {
         CheckBox checkBox;
         FSViewHolder(View view){
             super(view);
-            text = (TextView) view.findViewById(R.id.item_text);
-            checkBox = (CheckBox) view.findViewById(R.id.item_check_box);
+            text = (TextView) view.findViewById(R.id.file_searcher_item_text);
+            checkBox = (CheckBox) view.findViewById(R.id.file_searcher_item_check_box);
             text.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {

@@ -30,9 +30,9 @@ public class FileSearcherActivity extends AppCompatActivity {
     @Override
     protected void onCreate( Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.main);
-        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.main_recycler_view);
-        TextView text = (TextView) findViewById(R.id.main_text);
+        setContentView(R.layout.file_searcher_main);
+        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.file_searcher_main_recycler_view);
+        TextView text = (TextView) findViewById(R.id.file_searcher_main_text);
         mAdapter = new FSAdapter(this,text);
         recyclerView.setAdapter(mAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -42,7 +42,7 @@ public class FileSearcherActivity extends AppCompatActivity {
         }
         mAdapter.startSearch(Environment.getExternalStorageDirectory(),keyword);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.main_toolbar);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.file_searcher_main_toolbar);
         toolbar.setTitle("");
         toolbar.setNavigationIcon(R.drawable.ic_arrow_back_white_24dp);
         setSupportActionBar(toolbar);
@@ -78,7 +78,7 @@ public class FileSearcherActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.toolbar_menu,menu);
+        getMenuInflater().inflate(R.menu.file_searcher_toolbar_menu,menu);
         return true;
     }
 
@@ -87,7 +87,7 @@ public class FileSearcherActivity extends AppCompatActivity {
         if(mAdapter.isSearching()){
             return true;
         }
-        if(item.getItemId() == R.id.toolbar_menu_done){
+        if(item.getItemId() == R.id.file_searcher_toolbar_menu_done){
             ArrayList<File> selectedData = (ArrayList<File>) mAdapter.getSelectedItems();
             if(selectedData.size() == 0){
                 setResult(NO_DATA_SELECTED);
