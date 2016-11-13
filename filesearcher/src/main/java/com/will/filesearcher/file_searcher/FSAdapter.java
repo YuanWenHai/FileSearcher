@@ -58,7 +58,12 @@ public class FSAdapter extends RecyclerView.Adapter<FSAdapter.FSViewHolder> {
         fileSearcher.startSearch(dir,keyword);
 
     }
-
+    public void setMax(long max){
+        fileSearcher.setMaxSize(max);
+    }
+    public void setMin(long min){
+        fileSearcher.setMinSize(min);
+    }
     @Override
     public int getItemCount() {
         return resultList.size();
@@ -72,7 +77,10 @@ public class FSAdapter extends RecyclerView.Adapter<FSAdapter.FSViewHolder> {
 
     @Override
     public void onBindViewHolder(FSViewHolder holder, int position) {
-        holder.text.setText(resultList.get(position).getName());
+        File file = resultList.get(position);
+        holder.title.setText(file.getName());
+        holder.location.setText(file.getPath());
+        holder.size.setText(file.);
         if(isFinished){
             holder.checkBox.setVisibility(View.VISIBLE);
             holder.checkBox.setChecked(checkStatusMap.get(position));
@@ -82,22 +90,17 @@ public class FSAdapter extends RecyclerView.Adapter<FSAdapter.FSViewHolder> {
     }
 
     class FSViewHolder extends RecyclerView.ViewHolder{
-        TextView text;
-        CheckBox checkBox;
+        TextView title,location,size,time;
         FSViewHolder(View view){
             super(view);
-            text = (TextView) view.findViewById(R.id.file_searcher_item_text);
-            checkBox = (CheckBox) view.findViewById(R.id.file_searcher_item_check_box);
-            text.setOnClickListener(new View.OnClickListener() {
+            title = (TextView) view.findViewById(R.id.file_searcher_item_title);
+            location = (TextView) view.findViewById(R.id.file_searcher_item_location);
+            size = (TextView) view.findViewById(R.id.file_searcher_item_size);
+            time = (TextView) view.findViewById(R.id.file_searcher_item_create_time);
+            view.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    checkBox.setChecked(!checkBox.isChecked());
-                    checkStatusMap.set(getAdapterPosition(),checkBox.isChecked());                }
-            });
-            checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                @Override
-                public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                    checkStatusMap.set(getAdapterPosition(),b);
+                    checkStatusMap.set(getAdapterPosition(),!checkStatusMap.get(getAdapterPosition()));
                 }
             });
         }
@@ -139,5 +142,19 @@ public class FSAdapter extends RecyclerView.Adapter<FSAdapter.FSViewHolder> {
             }
         }
         return list;
+    }
+    private String getSizeWithSuitableUnit(File file){
+        float fileSize = file.length();
+        int kb = 1;
+        int mb = 2;
+        int gb = 3;
+        int i = 0;
+        while (fileSize > 1){
+            fileSize = fileSize / 1024;
+            i++;
+        }
+        StringBuilder builder = new StringBuilder();
+        builder.append(fileSize);
+        if(i<)
     }
 }

@@ -7,20 +7,35 @@
     app:cardUseCompatPadding="true">
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
         <TextView
-            android:id="@+id/file_searcher_item_text"
-            android:layout_width="0dp"
+            android:id="@+id/file_searcher_item_title"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:padding="10dp"
-            android:textSize="20sp"
-            android:textColor="@color/black"
-            tools:text="abcde.text"/>
-        <CheckBox
-            android:id="@+id/file_searcher_item_check_box"
-            android:layout_width="wrap_content"
+            android:maxLines="1"
+            android:ellipsize="marquee"
+            style="@style/FileSearcherItemTextAppearance"
+            tools:text="Name: abcde.txt"/>
+        <TextView
+            android:id="@+id/file_searcher_item_location"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"/>
+            style="@style/FileSearcherItemTextAppearance"
+            tools:text="Location: C:\Users\will\Desktop"/>
+        <TextView
+            android:id="@+id/file_searcher_item_size"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/FileSearcherItemTextAppearance"
+            tools:text="Size: 14.1 MB (14,887,654 字节)"
+            />
+        <TextView
+            android:id="@+id/file_searcher_item_create_time"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/FileSearcherItemTextAppearance"
+            tools:text="Create Time: 2016‎年‎11‎月‎10‎日，‏‎15:34:47"
+            />
     </LinearLayout>
 </android.support.v7.widget.CardView>

@@ -12,7 +12,9 @@ import java.io.File;
 public class FileSearcher {
     private Callback mCallback;
     private Handler handler;
-    private boolean stopSearching;
+    private volatile boolean stopSearching;
+    private long maxSize = 0;
+    private long minSize = 0;
     public FileSearcher(Callback callback){
         mCallback = callback;
         handler = new Handler(Looper.getMainLooper());
@@ -58,12 +60,24 @@ public class FileSearcher {
         for(final File file : dir.listFiles()){
             if(!file.isDirectory()){
                 if(file.getName().toUpperCase().contains(keyword.toUpperCase())){
-                    handler.post(new Runnable() {
-                        @Override
-                        public void run() {
-                            mCallback.onFind(file);
+                    if(maxSize > 0){
+                        if(file.length() <= maxSize && file.length() >= minSize ){
+                            handler.post(new Runnable() {
+                                @Override
+                                public void run() {
+                                    mCallback.onFind(file);
+                                }
+                            });
                         }
-                    });
+                    }else if(file.length() >= minSize){
+                        handler.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                mCallback.onFind(file);
+                            }
+                        });
+                    }
+
                 }
             }else{
                 searchFile(file,keyword);
@@ -74,6 +88,12 @@ public class FileSearcher {
         void onSearch(String pathName);
         void onFind(File file);
         void onFinish();
+    }
+    public void setMaxSize(long max){
+        maxSize = max;
+    }
+    public void setMinSize(long min){
+        minSize = Math.max(min,0);
     }
     public void stopSearching(boolean which){
         stopSearching = which;

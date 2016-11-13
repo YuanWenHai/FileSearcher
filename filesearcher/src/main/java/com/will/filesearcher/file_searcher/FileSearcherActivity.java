@@ -29,14 +29,25 @@ public class FileSearcherActivity extends AppCompatActivity {
     FSAdapter mAdapter;
     @Override
     protected void onCreate( Bundle savedInstanceState) {
+        Intent intent = getIntent();
+        int themeRes = intent.getIntExtra("theme",-1);
+        String keyword = intent.getStringExtra("keyword");
+        long max = intent.getLongExtra("max",0);
+        long min = intent.getLongExtra("min",0);
+        if(themeRes != -1){
+            setTheme(themeRes);
+        }
+
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.file_searcher_main);
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.file_searcher_main_recycler_view);
         TextView text = (TextView) findViewById(R.id.file_searcher_main_text);
         mAdapter = new FSAdapter(this,text);
+        mAdapter.setMax(max);
+        mAdapter.setMin(min);
         recyclerView.setAdapter(mAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        String keyword = getIntent().getStringExtra("keyword");
         if(keyword == null){
             throw new IllegalArgumentException("no keyword!");
         }
@@ -54,7 +65,7 @@ public class FileSearcherActivity extends AppCompatActivity {
         });
     }
     private void showAlertDialog(){
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        AlertDialog.Builder builder = new AlertDialog.Builder(this,R.style.FileSearcherDialogTheme);
         builder.setMessage(getText(R.string.dialog_message));
         builder.setPositiveButton(getText(R.string.confirm), new DialogInterface.OnClickListener() {
             @Override
