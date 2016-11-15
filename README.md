@@ -30,7 +30,7 @@ then we deal selected data in onActivityResult
 ## Theme
 optional,you can use custom theme.
 ```xml
-<!--extends FileSearcherActivityTheme, override below attributes.-->
+<!--extends FileSearcherActivityTheme, override these attributes.-->
  <style name="SearchTheme" parent="FileSearcherActivityTheme">
         <item name="colorPrimaryDark">#212121</item> <!--status bar color-->
         <item name="colorPrimary">#424242</item> <!--toolbar,scroll bar color-->
