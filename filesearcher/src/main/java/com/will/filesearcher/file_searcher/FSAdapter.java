@@ -1,12 +1,13 @@
 package com.will.filesearcher.file_searcher;
 
 import android.content.Context;
+import android.content.res.TypedArray;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.TextView;
 
 import com.will.filesearcher.R;
@@ -21,7 +22,7 @@ import java.util.List;
 
 public class FSAdapter extends RecyclerView.Adapter<FSAdapter.FSViewHolder> {
     private Context context;
-    private List<File> resultList = new ArrayList<>();
+    private List<FileDetail> resultList = new ArrayList<>();
     private List<Boolean> checkStatusMap = new ArrayList<>();
     private FileSearcher fileSearcher;
     private RecyclerView mRecyclerView;
@@ -35,7 +36,7 @@ public class FSAdapter extends RecyclerView.Adapter<FSAdapter.FSViewHolder> {
             }
 
             @Override
-            public void onFind(File file) {
+            public void onFind(FileDetail file) {
                 resultList.add(file);
                 checkStatusMap.add(false);
                 mRecyclerView.smoothScrollToPosition(resultList.size());
@@ -77,15 +78,16 @@ public class FSAdapter extends RecyclerView.Adapter<FSAdapter.FSViewHolder> {
 
     @Override
     public void onBindViewHolder(FSViewHolder holder, int position) {
-        File file = resultList.get(position);
-        holder.title.setText(file.getName());
-        holder.location.setText(file.getPath());
-        holder.size.setText(file.);
-        if(isFinished){
-            holder.checkBox.setVisibility(View.VISIBLE);
-            holder.checkBox.setChecked(checkStatusMap.get(position));
+        FileDetail file = resultList.get(position);
+        holder.title.setText(context.getString(R.string.file_name)+file.getName());
+        holder.location.setText(context.getString(R.string.file_path)+file.getPath());
+        holder.size.setText(context.getString(R.string.file_size)+file.getSize());
+        holder.time.setText(context.getString(R.string.file_last_modified_time)+file.getLastModifiedTime());
+        CardView cardView = (CardView) holder.itemView;
+        if(checkStatusMap.get(position)){
+            cardView.setCardBackgroundColor(fetchAccentColor());
         }else{
-            holder.checkBox.setVisibility(View.INVISIBLE);
+            cardView.setCardBackgroundColor(context.getResources().getColor(R.color.cardview_light_background));
         }
     }
 
@@ -101,6 +103,7 @@ public class FSAdapter extends RecyclerView.Adapter<FSAdapter.FSViewHolder> {
                 @Override
                 public void onClick(View view) {
                     checkStatusMap.set(getAdapterPosition(),!checkStatusMap.get(getAdapterPosition()));
+                    notifyDataSetChanged();
                 }
             });
         }
@@ -138,23 +141,19 @@ public class FSAdapter extends RecyclerView.Adapter<FSAdapter.FSViewHolder> {
         List<File> list = new ArrayList<>();
         for(int i=0;i<checkStatusMap.size();i++){
             if(checkStatusMap.get(i)){
-                list.add(resultList.get(i));
+                list.add(resultList.get(i).getFile());
             }
         }
         return list;
     }
-    private String getSizeWithSuitableUnit(File file){
-        float fileSize = file.length();
-        int kb = 1;
-        int mb = 2;
-        int gb = 3;
-        int i = 0;
-        while (fileSize > 1){
-            fileSize = fileSize / 1024;
-            i++;
-        }
-        StringBuilder builder = new StringBuilder();
-        builder.append(fileSize);
-        if(i<)
+    private int fetchAccentColor() {
+        TypedValue typedValue = new TypedValue();
+
+        TypedArray a = context.obtainStyledAttributes(typedValue.data, new int[] { R.attr.colorAccent });
+        int color = a.getColor(0, 0);
+
+        a.recycle();
+
+        return color;
     }
 }

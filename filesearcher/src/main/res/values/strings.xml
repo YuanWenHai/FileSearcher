@@ -8,4 +8,8 @@
     <string name="select_all">select all</string>
     <string name="done">done</string>
     <string name="no_result">No Result Found</string>
+    <string name="file_name">Name:&#160;</string>
+    <string name="file_path">Path:&#160;</string>
+    <string name="file_size">Size:&#160;</string>
+    <string name="file_last_modified_time">Modified time:&#160;</string>
 </resources>

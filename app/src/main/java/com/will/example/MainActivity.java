@@ -31,7 +31,7 @@ public class MainActivity extends AppCompatActivity {
                 }else{
                     Intent intent = new Intent(MainActivity.this, FileSearcherActivity.class);
                     intent.putExtra("keyword",content);
-                    intent.putExtra("theme",R.style.MTheme);
+                    intent.putExtra("theme",R.style.SearchTheme);
                     intent.putExtra("min",(long)50*1024);
                     startActivityForResult(intent,REQUEST_CODE);
                 }

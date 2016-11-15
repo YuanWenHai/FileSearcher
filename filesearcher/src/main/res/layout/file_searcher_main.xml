@@ -27,9 +27,10 @@
             tools:text="正在搜索目录: abcde"/>
     </android.support.v7.widget.Toolbar>
 
-    <android.support.v7.widget.RecyclerView
+    <com.simplecityapps.recyclerview_fastscroll.views.FastScrollRecyclerView
         android:id="@+id/file_searcher_main_recycler_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:scrollbars="vertical"/>
+        app:fastScrollThumbColor="?attr/colorPrimary"
+        app:fastScrollPopupBackgroundSize="10dp"/>
 </LinearLayout>

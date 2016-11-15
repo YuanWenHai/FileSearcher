@@ -7,4 +7,8 @@
     <string name="confirm">确定</string>
     <string name="dialog_message">放弃搜索？</string>
     <string name="no_result">未发现符合条件的文件</string>
+    <string name="file_last_modified_time">修改时间：</string>
+    <string name="file_name">文件名：</string>
+    <string name="file_path">文件路径：</string>
+    <string name="file_size">文件大小：</string>
 </resources>

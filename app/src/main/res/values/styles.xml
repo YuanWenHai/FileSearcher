@@ -7,9 +7,9 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
     </style>
-    <style name="MTheme" parent="FileSearcherActivityTheme">
+    <style name="SearchTheme" parent="FileSearcherActivityTheme">
         <item name="colorPrimaryDark">#212121</item>
         <item name="colorPrimary">#424242</item>
-        <item name="colorAccent">@color/colorPrimary</item>
+        <item name="colorAccent">#e0e0e0</item>
     </style>
 </resources>

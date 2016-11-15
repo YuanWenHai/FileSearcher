@@ -62,18 +62,20 @@ public class FileSearcher {
                 if(file.getName().toUpperCase().contains(keyword.toUpperCase())){
                     if(maxSize > 0){
                         if(file.length() <= maxSize && file.length() >= minSize ){
+                            final FileDetail detail = new FileDetail(file);
                             handler.post(new Runnable() {
                                 @Override
                                 public void run() {
-                                    mCallback.onFind(file);
+                                    mCallback.onFind(detail);
                                 }
                             });
                         }
                     }else if(file.length() >= minSize){
+                        final FileDetail detail = new FileDetail(file);
                         handler.post(new Runnable() {
                             @Override
                             public void run() {
-                                mCallback.onFind(file);
+                                mCallback.onFind(detail);
                             }
                         });
                     }
@@ -84,9 +86,10 @@ public class FileSearcher {
             }
         }
     }
+
     public interface Callback {
         void onSearch(String pathName);
-        void onFind(File file);
+        void onFind(FileDetail fileDetail);
         void onFinish();
     }
     public void setMaxSize(long max){
