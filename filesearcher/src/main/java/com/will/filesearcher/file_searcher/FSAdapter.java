@@ -27,8 +27,10 @@ public class FSAdapter extends RecyclerView.Adapter<FSAdapter.FSViewHolder> {
     private FileSearcher fileSearcher;
     private RecyclerView mRecyclerView;
     private boolean isFinished;
+    private int colorAccent;
     FSAdapter(final Context context, final TextView textView){
         this.context = context;
+        colorAccent = fetchAccentColor();
         fileSearcher = new FileSearcher(new FileSearcher.Callback() {
             @Override
             public void onSearch(String pathName) {
@@ -85,7 +87,7 @@ public class FSAdapter extends RecyclerView.Adapter<FSAdapter.FSViewHolder> {
         holder.time.setText(context.getString(R.string.file_last_modified_time)+file.getLastModifiedTime());
         CardView cardView = (CardView) holder.itemView;
         if(checkStatusMap.get(position)){
-            cardView.setCardBackgroundColor(fetchAccentColor());
+            cardView.setCardBackgroundColor(colorAccent);
         }else{
             cardView.setCardBackgroundColor(context.getResources().getColor(R.color.cardview_light_background));
         }
