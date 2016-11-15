@@ -7,10 +7,10 @@ A simple fileSearcher.
 start FileSearcherActivity from our activity,do not forget the keyword.
 ```java
 Intent intent = new Intent(MainActivity.this, FileSearcherActivity.class);
-intent.putExtra("keyword",content);
+intent.putExtra("keyword",".txt");
 //optional------
 
-intent.putExtra("max",50 * 1024);//size filter
+//intent.putExtra("max",50 * 1024);//size filter
 intent.putExtra("min",50 * 1024);
 intent.putExtra("theme",R.style.SearchTheme);//set custom theme here
 
