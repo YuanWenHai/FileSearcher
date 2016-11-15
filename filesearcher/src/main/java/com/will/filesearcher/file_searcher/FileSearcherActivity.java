@@ -33,7 +33,13 @@ public class FileSearcherActivity extends AppCompatActivity {
         int themeRes = intent.getIntExtra("theme",-1);
         String keyword = intent.getStringExtra("keyword");
         long max = intent.getLongExtra("max",0);
+        if(max == 0){
+            max = intent.getIntExtra("max",0);
+        }
         long min = intent.getLongExtra("min",0);
+        if(min == 0){
+            min = intent.getIntExtra("min",0);
+        }
         if(themeRes != -1){
             setTheme(themeRes);
         }
