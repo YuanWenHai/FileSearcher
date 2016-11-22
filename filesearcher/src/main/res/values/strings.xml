@@ -1,5 +1,4 @@
 <resources>
-    <string name="app_name">FileSearcher</string>
     <string name="search_finish">Search Completed</string>
     <string name="searching">Searching Directory : </string>
     <string name="confirm">Confirm</string>
