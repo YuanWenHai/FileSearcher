@@ -1,7 +1,7 @@
 # FileSearcher
 A simple fileSearcher.
 
-![image](http://i.makeagif.com/media/11-15-2016/UWYh3x.gif)
+![image](http://i.makeagif.com/media/11-15-2016/iu91EH.gif)
 
 ## How to
 start FileSearcherActivity from our activity,do not forget the keyword.
@@ -52,5 +52,5 @@ Add it in your root build.gradle at the end of repositories:
 Step 2. Add the dependency
 
 	dependencies {
-		 compile 'com.github.YuanWenHai:FileSearcher:1.3.1'
+		 compile 'com.github.YuanWenHai:FileSearcher:1.3.2'
 	}
