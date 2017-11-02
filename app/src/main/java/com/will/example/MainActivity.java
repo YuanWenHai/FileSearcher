@@ -1,17 +1,16 @@
 package com.will.example;
 
-import android.content.Intent;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
-import com.will.filesearcher.file_searcher.FileSearcherActivity;
+import com.will.filesearcher.FileSearcher;
 
 import java.io.File;
-import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
     private static final int REQUEST_CODE = 888;
@@ -25,28 +24,23 @@ public class MainActivity extends AppCompatActivity {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String content = editText.getText().toString();
+               /* String content = editText.getText().toString();
                 if(content.replaceAll(" ","").isEmpty()){
                     Toast.makeText(MainActivity.this, "miss the keyword", Toast.LENGTH_SHORT).show();
                 }else{
-                    Intent intent = new Intent(MainActivity.this, FileSearcherActivity.class);
-                    intent.putExtra("keyword",content);
-                    //intent.putExtra("theme",R.style.SearchTheme);
-                    intent.putExtra("min",50*1024);
-                    startActivityForResult(intent,REQUEST_CODE);
-                }
+
+                }*/
+                FileSearcher fileSearcher = new FileSearcher(Environment.getExternalStorageDirectory(),MainActivity.this);
+                fileSearcher.showHidden(true)./*withExtension("txt").withSizeLimit(1,-5).withKeyword("DUmP").*/search(new FileSearcher.FileSearcherCallback() {
+                    @Override
+                    public void onSelect(List<File> files) {
+
+                    }
+                });
             }
         });
 
 
 
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if(requestCode == REQUEST_CODE && resultCode ==FileSearcherActivity.OK && data != null){
-            ArrayList<File> list = ( ArrayList<File>) data.getSerializableExtra("data");
-            Toast.makeText(this,"you selected"+list.size()+"items",Toast.LENGTH_SHORT).show();
-        }
     }
 }

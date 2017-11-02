@@ -10,7 +10,8 @@
         android:background="?attr/colorPrimary"
         app:contentInsetStart="0dp"
         app:contentInsetLeft="0dp"
-        app:title="@string/searching">
+        app:title="@string/searching"
+        app:titleTextAppearance="@style/FileSearcherToolbarTitleAppearance">
     </android.support.v7.widget.Toolbar>
     <android.support.v7.widget.RecyclerView
         android:id="@+id/file_searcher_main_recycler_view"
