@@ -12,7 +12,7 @@ public class FileSearcherUtil {
         if(size == 0){
             return "0b";
         }
-        String[] units = new String[]{"b","Kb","Mb","Gb"};
+        String[] units = new String[]{"b","kb","mb","gb"};
         double power = Math.log10(1024);
         int level = (int)(Math.log10(size)/power);
         double factor = Math.pow(1024,level);

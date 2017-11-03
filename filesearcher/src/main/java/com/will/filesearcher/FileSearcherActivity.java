@@ -3,11 +3,13 @@ package com.will.filesearcher;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 
 import com.will.filesearcher.filter.FileFilter;
+import com.will.filesearcher.searchengine.FileItem;
 import com.will.filesearcher.searchengine.SearchEngine;
 
 import java.io.File;
@@ -25,14 +27,21 @@ public class FileSearcherActivity extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.file_searcher_main);
         initializeView();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
         initializeSearchEngine();
     }
+
     private void initializeView(){
         toolbar = findViewById(R.id.file_searcher_main_toolbar);
         RecyclerView recyclerView  = findViewById(R.id.file_searcher_main_recycler_view);
         adapter = new FileSearcherAdapter();
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(adapter);
+        recyclerView.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
     }
     private void initializeSearchEngine(){
         FileFilter filter = (FileFilter) getIntent().getSerializableExtra(FileSearcher.FILE_FILTER);
@@ -43,8 +52,8 @@ public class FileSearcherActivity extends AppCompatActivity{
         searchEngine = new SearchEngine(path,filter);
         searchEngine.start(new SearchEngine.SearchEngineCallback() {
             @Override
-            public void onFind(File file) {
-                adapter.addItem(file);
+            public void onFind(FileItem item) {
+                adapter.addItem(item);
             }
 
             @Override

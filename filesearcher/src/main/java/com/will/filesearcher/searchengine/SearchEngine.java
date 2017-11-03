@@ -2,7 +2,6 @@ package com.will.filesearcher.searchengine;
 
 import android.os.Handler;
 import android.os.Looper;
-import android.util.Log;
 
 import com.will.filesearcher.filter.FileFilter;
 
@@ -45,7 +44,7 @@ public class SearchEngine {
     }
 
     private void findFileRecursively(final File file,final SearchEngineCallback callback){
-        Log.d("file name",file.getName());
+        //Log.d("file name",file.getName());
         if(file.isDirectory() ){
             File[] files = file.listFiles();
             if(files != null){
@@ -61,10 +60,11 @@ public class SearchEngine {
             }
         }else{
             if(filter.filter(file)){
+                final FileItem item = new FileItem(file);
                 handler.post(new Runnable() {
                     @Override
                     public void run() {
-                        callback.onFind(file);
+                        callback.onFind(item);
                     }
                 });
 
@@ -72,7 +72,7 @@ public class SearchEngine {
         }
     }
     public interface SearchEngineCallback{
-        void onFind(File file);
+        void onFind(FileItem fileItem);
         void onSearchDirectory(File file);
         void onFinish();
     }

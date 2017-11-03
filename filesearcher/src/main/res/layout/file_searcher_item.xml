@@ -1,35 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="100dp"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    app:cardUseCompatPadding="true">
-    <RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="70dp"
+    android:background="?android:attr/selectableItemBackground">
+    <ImageView
+        android:id="@+id/file_searcher_item_image_view"
+        android:layout_width="47dp"
+        android:layout_height="70dp"
+        android:src="@drawable/icon"/>
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <ImageView
-            android:id="@+id/file_searcher_item_image_view"
-            android:layout_width="66dp"
-            android:layout_height="100dp"
-            android:src="@drawable/icon"/>
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_centerVertical="true"
+        android:layout_toEndOf="@id/file_searcher_item_image_view"
+        android:layout_toStartOf="@id/file_searcher_item_check_box">
         <TextView
             android:id="@+id/file_searcher_item_text_title"
-            android:layout_toEndOf="@id/file_searcher_item_image_view"
-            android:layout_marginTop="17dp"
+            android:textSize="18sp"
+            android:textColor="@color/fileSearcherBlack"
             style="@style/FileSearcherItemTextViewAppearance"
             tools:text="国祚密码"/>
         <TextView
-            android:id="@+id/file_searcher_item_text_size"
-            android:layout_toEndOf="@id/file_searcher_item_image_view"
-            android:layout_below="@id/file_searcher_item_text_title"
+            android:id="@+id/file_searcher_item_text_detail"
             style="@style/FileSearcherItemTextViewAppearance"
-            tools:text="Size:2.13Mb"/>
+            tools:text="2.13mb,2017.10.31"/>
         <TextView
-            android:id="@+id/file_searcher_item_text_location"
-            android:layout_toEndOf="@id/file_searcher_item_image_view"
-            android:layout_below="@id/file_searcher_item_text_size"
+            android:id="@+id/file_searcher_item_text_path"
             style="@style/FileSearcherItemTextViewAppearance"
             tools:text="C:\document\国祚密码.text"/>
-    </RelativeLayout>
-</android.support.v7.widget.CardView>
+    </LinearLayout>
+    <CheckBox
+        android:id="@+id/file_searcher_item_check_box"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_alignParentEnd="true"
+        android:layout_margin="10dp"/>
+
+</RelativeLayout>

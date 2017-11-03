@@ -1,7 +1,5 @@
 package com.will.filesearcher.filter;
 
-import android.util.Log;
-
 import java.io.File;
 import java.io.Serializable;
 
@@ -29,7 +27,7 @@ public class FileFilter implements Serializable{
         this.showHidden = showHidden;
     }
     public boolean filter(File file){
-        Log.d("fileFilter",file.getName());
+        //Log.d("fileFilter",file.getName());
         return sizeFilter(file) && extensionFilter(file) && keywordFilter(file) && hiddenFileFilter(file);
     }
     private boolean sizeFilter(File file){

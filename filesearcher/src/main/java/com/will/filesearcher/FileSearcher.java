@@ -26,9 +26,9 @@ public class FileSearcher  {
     }
 
     /**
-     * search with size limit
-     * @param min minimum size in byte
-     * @param max max size in byte,negative value is no limit
+     * search with detail limit
+     * @param min minimum detail in byte
+     * @param max max detail in byte,negative value is no limit
      * @return itself
      */
     public FileSearcher withSizeLimit(long min, long max){
