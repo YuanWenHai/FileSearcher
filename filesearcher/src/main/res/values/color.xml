@@ -5,6 +5,7 @@
     <color name="fileSearcherAccentColor">#3f51b5</color>
     <color name="fileSearcherTransparent">#00000000</color>
     <color name="fileSearcherBlack">#333333</color>
-    <color name="white">#ffffff</color>
-    <color name="gray">#808080</color>
+    <color name="fileSearcherWhite">#ffffff</color>
+    <color name="fileSearcherCheckedBackground">#E8EAF6</color>
+    <color name="fileSearcherGray">#808080</color>
 </resources>

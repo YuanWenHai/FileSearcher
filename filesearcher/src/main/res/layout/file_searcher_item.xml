@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="70dp"
-    android:background="?android:attr/selectableItemBackground">
+    android:background="@color/fileSearcherWhite">
     <ImageView
         android:id="@+id/file_searcher_item_image_view"
         android:layout_width="47dp"
