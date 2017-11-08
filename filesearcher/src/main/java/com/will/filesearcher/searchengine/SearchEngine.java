@@ -15,6 +15,7 @@ public class SearchEngine {
     private final File path;
     private final FileFilter filter;
     private final android.os.Handler handler;
+    private boolean isSearching;
 
     private Thread worker;
     public SearchEngine(File path, FileFilter filter){
@@ -23,6 +24,7 @@ public class SearchEngine {
         handler = new Handler(Looper.myLooper());
     }
     public void start(final SearchEngineCallback callback){
+        isSearching = true;
         worker = new Thread(new Runnable() {
             @Override
             public void run() {
@@ -33,14 +35,19 @@ public class SearchEngine {
                         callback.onFinish();
                     }
                 });
+                isSearching = false;
             }
         });
         worker.start();
     }
     public void stop(){
-        if(worker != null){
+        if(worker != null && isSearching){
             worker.interrupt();
+            isSearching = false;
         }
+    }
+    public boolean isSearching(){
+        return isSearching;
     }
 
     private void findFileRecursively(final File file,final SearchEngineCallback callback){

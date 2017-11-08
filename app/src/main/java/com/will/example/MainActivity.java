@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.will.filesearcher.FileSearcher;
 
@@ -34,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
                 fileSearcher.showHidden(true)./*withExtension("txt").withSizeLimit(1,-5).withKeyword("DUmP").*/search(new FileSearcher.FileSearcherCallback() {
                     @Override
                     public void onSelect(List<File> files) {
-
+                        Toast.makeText(MainActivity.this, files.size()+"", Toast.LENGTH_SHORT).show();
                     }
                 });
             }

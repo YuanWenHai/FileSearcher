@@ -19,7 +19,7 @@ public class FileSearcher  {
     static final String SEARCH_PATH = "search_path";
     private final FileFilter fileFilter = new FileFilter();
     private final Context context;
-    private static FileSearcherCallback callback;
+    public static FileSearcherCallback callback;
     public FileSearcher(File path,Context context){
         this.path = path;
         this.context = context;

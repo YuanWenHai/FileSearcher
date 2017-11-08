@@ -21,6 +21,7 @@ import java.util.List;
 
 public class FileSearcherAdapter extends RecyclerView.Adapter<FileSearcherAdapter.FileSearcherVH> {
     private List<FileItem> items = new ArrayList<>();
+    private List<FileItem> selectedItems = new ArrayList<>();
     private OnItemSelectCallback callback;
     private final int colorUnchecked;
     private final int colorChecked;
@@ -55,6 +56,31 @@ public class FileSearcherAdapter extends RecyclerView.Adapter<FileSearcherAdapte
         //maybe batched?
         notifyDataSetChanged();
     }
+
+    public void selectAll(){
+        boolean isAllSelected = isAllSelected();
+        for(FileItem item : items){
+            item.setChecked(!isAllSelected);
+        }
+        notifyDataSetChanged();
+        if(items.get(0).isChecked()){
+            selectedItems.clear();
+            selectedItems.addAll(items);
+        }else{
+            selectedItems.clear();
+        }
+        if(callback != null){
+            callback.onSelectStateChanged(selectedItems);
+        }
+    }
+    private boolean isAllSelected(){
+        for (FileItem item : items){
+                if (!item.isChecked()){
+                    return false;
+                }
+        }
+        return true;
+    }
     public void setOnItemSelectCallback(OnItemSelectCallback callback){
         this.callback = callback;
     }
@@ -71,25 +97,30 @@ public class FileSearcherAdapter extends RecyclerView.Adapter<FileSearcherAdapte
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    checkBox.setChecked(!checkBox.isChecked());
+                    checkBox.performClick();
                     //items.get(getLayoutPosition()).setChecked(checkBox.isChecked());
                 }
             });
-            checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            checkBox.setOnClickListener(new View.OnClickListener() {
                 @Override
-                public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                    Log.d("on ","check changed");
+                public void onClick(View view) {
+                    boolean b = checkBox.isChecked();
                     items.get(getLayoutPosition()).setChecked(b);
                     itemView.setBackgroundColor(b ? colorChecked : colorUnchecked );
+                    if(b){
+                        selectedItems.add(items.get(getLayoutPosition()));
+                    }else{
+                        selectedItems.remove(items.get(getLayoutPosition()));
+                    }
                     if(callback != null){
-                        callback.onSelect(items.get(getLayoutPosition()),b);
+                        callback.onSelectStateChanged(selectedItems);
                     }
                 }
             });
         }
     }
     interface OnItemSelectCallback {
-        void onSelect(FileItem item,boolean which);
+        void onSelectStateChanged(List<FileItem> items);
     }
 
 }

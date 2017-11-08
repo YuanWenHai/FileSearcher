@@ -3,12 +3,14 @@ package com.will.filesearcher;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 
 import com.will.filesearcher.filter.FileFilter;
@@ -28,18 +30,18 @@ public class FileSearcherActivity extends AppCompatActivity{
     private FileSearcherAdapter adapter;
     private Toolbar toolbar;
     private FloatingActionButton fab;
-    private List<FileItem> selectedItems = new ArrayList<>();
+    private List<FileItem> selectedItems;
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.file_searcher_main);
         initializeView();
+        initializeSearchEngine();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        initializeSearchEngine();
     }
 
     private void initializeView(){
@@ -53,18 +55,30 @@ public class FileSearcherActivity extends AppCompatActivity{
             }
         });
         fab = findViewById(R.id.file_searcher_main_fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ArrayList<File> list = new ArrayList<>();
+                for(FileItem item : selectedItems){
+                    list.add(item.getFile());
+                }
+                FileSearcher.callback.onSelect(list);
+                finish();
+            }
+        });
         RecyclerView recyclerView  = findViewById(R.id.file_searcher_main_recycler_view);
         adapter = new FileSearcherAdapter(this);
         adapter.setOnItemSelectCallback(new FileSearcherAdapter.OnItemSelectCallback() {
+
             @Override
-            public void onSelect(FileItem item, boolean which) {
-                if(which){
-                    selectedItems.add(item);
-                }else{
-                    selectedItems.remove(item);
+            public void onSelectStateChanged(List<FileItem> items) {
+                if(selectedItems == null){
+                    selectedItems = items;
                 }
                 toolbar.setTitle(selectedItems.size()+"/"+adapter.getItemCount());
             }
+
+
         });
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(adapter);
@@ -85,7 +99,7 @@ public class FileSearcherActivity extends AppCompatActivity{
 
             @Override
             public void onSearchDirectory(File file) {
-                toolbar.setTitle(file.getName());
+                toolbar.setTitle(getString(com.will.filesearcher.R.string.file_searcher_searching)+file.getName());
             }
 
             @Override
@@ -96,8 +110,28 @@ public class FileSearcherActivity extends AppCompatActivity{
     }
 
     @Override
+    public void onBackPressed() {
+        if(searchEngine.isSearching()){
+
+        }
+        super.onBackPressed();
+    }
+    private void showCancelDialog(){
+        new AlertDialog.Builder(this).setTitle(getString(R.string.file_searcher_cancel))
+    }
+
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.file_searcher_activity_menu,menu);
+        getMenuInflater().inflate(com.will.filesearcher.R.menu.file_searcher_activity_menu,menu);
         return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if(item.getItemId() == com.will.filesearcher.R.id.file_searcher_menu_select_all){
+            adapter.selectAll();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }
