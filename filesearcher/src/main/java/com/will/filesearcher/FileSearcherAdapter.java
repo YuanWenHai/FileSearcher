@@ -11,6 +11,7 @@ import android.widget.CompoundButton;
 import android.widget.TextView;
 
 import com.will.filesearcher.searchengine.FileItem;
+import com.will.filesearcher.searchengine.SearchEngine;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,10 +26,12 @@ public class FileSearcherAdapter extends RecyclerView.Adapter<FileSearcherAdapte
     private OnItemSelectCallback callback;
     private final int colorUnchecked;
     private final int colorChecked;
+    private SearchEngine searchEngine;
 
-    public FileSearcherAdapter(Context context){
+    public FileSearcherAdapter(Context context,SearchEngine searchEngine){
         colorUnchecked = context.getResources().getColor(R.color.fileSearcherWhite);
         colorChecked = context.getResources().getColor(R.color.fileSearcherCheckedBackground);
+        this.searchEngine = searchEngine;
     }
 
     @Override
@@ -63,7 +66,7 @@ public class FileSearcherAdapter extends RecyclerView.Adapter<FileSearcherAdapte
             item.setChecked(!isAllSelected);
         }
         notifyDataSetChanged();
-        if(items.get(0).isChecked()){
+        if(!isAllSelected){
             selectedItems.clear();
             selectedItems.addAll(items);
         }else{
@@ -104,6 +107,9 @@ public class FileSearcherAdapter extends RecyclerView.Adapter<FileSearcherAdapte
             checkBox.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+                    if(searchEngine.isSearching()){
+                        return;
+                    }
                     boolean b = checkBox.isChecked();
                     items.get(getLayoutPosition()).setChecked(b);
                     itemView.setBackgroundColor(b ? colorChecked : colorUnchecked );

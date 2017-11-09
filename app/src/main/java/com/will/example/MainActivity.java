@@ -32,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
 
                 }*/
                 FileSearcher fileSearcher = new FileSearcher(Environment.getExternalStorageDirectory(),MainActivity.this);
-                fileSearcher.showHidden(true)./*withExtension("txt").withSizeLimit(1,-5).withKeyword("DUmP").*/search(new FileSearcher.FileSearcherCallback() {
+                fileSearcher.showHidden(true).withExtension("txt").withSizeLimit(1024*1024*1024,-5).search(new FileSearcher.FileSearcherCallback() {
                     @Override
                     public void onSelect(List<File> files) {
                         Toast.makeText(MainActivity.this, files.size()+"", Toast.LENGTH_SHORT).show();

@@ -1,5 +1,6 @@
 package com.will.filesearcher;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
@@ -29,8 +30,8 @@ public class FileSearcherActivity extends AppCompatActivity{
     private SearchEngine searchEngine;
     private FileSearcherAdapter adapter;
     private Toolbar toolbar;
-    private FloatingActionButton fab;
     private List<FileItem> selectedItems;
+    private View emptyView;
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,6 +46,7 @@ public class FileSearcherActivity extends AppCompatActivity{
     }
 
     private void initializeView(){
+        emptyView = findViewById(R.id.file_searcher_main_no_result_found);
         toolbar = findViewById(R.id.file_searcher_main_toolbar);
         toolbar.setNavigationIcon(R.drawable.back_holo_dark_no_trim_no_padding);
         setSupportActionBar(toolbar);
@@ -54,20 +56,25 @@ public class FileSearcherActivity extends AppCompatActivity{
                 onBackPressed();
             }
         });
-        fab = findViewById(R.id.file_searcher_main_fab);
+        FloatingActionButton fab = findViewById(R.id.file_searcher_main_fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(searchEngine.isSearching()){
+                    return;
+                }
                 ArrayList<File> list = new ArrayList<>();
-                for(FileItem item : selectedItems){
-                    list.add(item.getFile());
+                if(selectedItems != null){
+                    for(FileItem item : selectedItems){
+                        list.add(item.getFile());
+                    }
                 }
                 FileSearcher.callback.onSelect(list);
                 finish();
             }
         });
         RecyclerView recyclerView  = findViewById(R.id.file_searcher_main_recycler_view);
-        adapter = new FileSearcherAdapter(this);
+        adapter = new FileSearcherAdapter(this,searchEngine);
         adapter.setOnItemSelectCallback(new FileSearcherAdapter.OnItemSelectCallback() {
 
             @Override
@@ -104,6 +111,9 @@ public class FileSearcherActivity extends AppCompatActivity{
 
             @Override
             public void onFinish() {
+                if(adapter.getItemCount() == 0){
+                    emptyView.setVisibility(View.VISIBLE);
+                }
                 toolbar.setTitle("0/"+adapter.getItemCount());
             }
         });
@@ -112,12 +122,21 @@ public class FileSearcherActivity extends AppCompatActivity{
     @Override
     public void onBackPressed() {
         if(searchEngine.isSearching()){
-
+            showCancelDialog();
+        }else{
+            super.onBackPressed();
         }
-        super.onBackPressed();
     }
     private void showCancelDialog(){
-        new AlertDialog.Builder(this).setTitle(getString(R.string.file_searcher_cancel))
+        new AlertDialog.Builder(this)
+                .setTitle(getString(R.string.file_searcher_cancel_search)).
+                setPositiveButton(getString(R.string.file_searcher_confirm), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        searchEngine.stop();
+                    }
+                }).setNegativeButton(getString(R.string.file_searcher_cancel),null)
+                .create().show();
     }
 
     @Override
@@ -128,7 +147,8 @@ public class FileSearcherActivity extends AppCompatActivity{
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if(item.getItemId() == com.will.filesearcher.R.id.file_searcher_menu_select_all){
+        if(item.getItemId() == com.will.filesearcher.R.id.file_searcher_menu_select_all && !searchEngine.isSearching()){
+
             adapter.selectAll();
             return true;
         }

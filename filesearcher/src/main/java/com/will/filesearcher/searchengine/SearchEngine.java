@@ -16,8 +16,8 @@ public class SearchEngine {
     private final FileFilter filter;
     private final android.os.Handler handler;
     private boolean isSearching;
+    private volatile boolean stop;
 
-    private Thread worker;
     public SearchEngine(File path, FileFilter filter){
         this.path = path;
         this.filter = filter;
@@ -25,32 +25,32 @@ public class SearchEngine {
     }
     public void start(final SearchEngineCallback callback){
         isSearching = true;
-        worker = new Thread(new Runnable() {
+        stop = false;
+        new Thread(new Runnable() {
             @Override
             public void run() {
                 findFileRecursively(path,callback);
-                handler.post(new Runnable() {
+                System.out.println(handler.post(new Runnable() {
                     @Override
                     public void run() {
                         callback.onFinish();
                     }
-                });
+                }));
                 isSearching = false;
             }
-        });
-        worker.start();
+        }).start();
     }
     public void stop(){
-        if(worker != null && isSearching){
-            worker.interrupt();
-            isSearching = false;
-        }
+       stop = isSearching;
     }
     public boolean isSearching(){
         return isSearching;
     }
 
     private void findFileRecursively(final File file,final SearchEngineCallback callback){
+        if(stop){
+            return;
+        }
         //Log.d("file name",file.getName());
         if(file.isDirectory() ){
             File[] files = file.listFiles();
