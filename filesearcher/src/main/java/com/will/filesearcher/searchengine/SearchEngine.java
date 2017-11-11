@@ -17,6 +17,7 @@ public class SearchEngine {
     private final android.os.Handler handler;
     private boolean isSearching;
     private volatile boolean stop;
+    private SearchEngineCallback callback;
 
     public SearchEngine(File path, FileFilter filter){
         this.path = path;
@@ -40,6 +41,11 @@ public class SearchEngine {
             }
         }).start();
     }
+    public void start(){
+        if(callback != null){
+            start(callback);
+        }
+    }
     public void stop(){
        stop = isSearching;
     }
@@ -47,6 +53,9 @@ public class SearchEngine {
         return isSearching;
     }
 
+    public void setCallback(SearchEngineCallback callback){
+        this.callback = callback;
+    }
     private void findFileRecursively(final File file,final SearchEngineCallback callback){
         if(stop){
             return;

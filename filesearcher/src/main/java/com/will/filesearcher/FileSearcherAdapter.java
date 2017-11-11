@@ -1,6 +1,7 @@
 package com.will.filesearcher;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -28,7 +29,7 @@ public class FileSearcherAdapter extends RecyclerView.Adapter<FileSearcherAdapte
     private final int colorChecked;
     private SearchEngine searchEngine;
 
-    public FileSearcherAdapter(Context context,SearchEngine searchEngine){
+    public FileSearcherAdapter(Context context,@NonNull SearchEngine searchEngine){
         colorUnchecked = context.getResources().getColor(R.color.fileSearcherWhite);
         colorChecked = context.getResources().getColor(R.color.fileSearcherCheckedBackground);
         this.searchEngine = searchEngine;

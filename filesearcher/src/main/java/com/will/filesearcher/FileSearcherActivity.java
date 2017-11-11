@@ -2,6 +2,7 @@ package com.will.filesearcher;
 
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
@@ -36,8 +37,9 @@ public class FileSearcherActivity extends AppCompatActivity{
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.file_searcher_main);
-        initializeView();
         initializeSearchEngine();
+        initializeView();
+        searchEngine.start();
     }
 
     @Override
@@ -98,7 +100,7 @@ public class FileSearcherActivity extends AppCompatActivity{
             throw new NullPointerException("the filter and path cannot be null!");
         }
         searchEngine = new SearchEngine(path,filter);
-        searchEngine.start(new SearchEngine.SearchEngineCallback() {
+        searchEngine.setCallback(new SearchEngine.SearchEngineCallback() {
             @Override
             public void onFind(FileItem item) {
                 adapter.addItem(item);
@@ -106,7 +108,7 @@ public class FileSearcherActivity extends AppCompatActivity{
 
             @Override
             public void onSearchDirectory(File file) {
-                toolbar.setTitle(getString(com.will.filesearcher.R.string.file_searcher_searching)+file.getName());
+                toolbar.setTitle(getString(com.will.filesearcher.R.string.file_searcher_searching)+ file.getPath().replace(Environment.getExternalStorageDirectory().getPath(),""));
             }
 
             @Override
@@ -143,6 +145,12 @@ public class FileSearcherActivity extends AppCompatActivity{
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(com.will.filesearcher.R.menu.file_searcher_activity_menu,menu);
         return true;
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        FileSearcher.callback = null;
     }
 
     @Override

@@ -26,7 +26,9 @@
         <item name="android:background">@null</item>
     </style>
     <style name="FileSearcherToolbarTitleAppearance" parent="TextAppearance.Widget.AppCompat.Toolbar.Title">
-        <item name="android:textSize">18sp</item>
+        <item name="android:textColor">@color/fileSearcherWhite</item>
+    </style>
+    <style name="FileSearcherToolbarSubtitleAppearance" parent="TextAppearance.Widget.AppCompat.Toolbar.Subtitle">
         <item name="android:textColor">@color/fileSearcherWhite</item>
     </style>
 </resources>

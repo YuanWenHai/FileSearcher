@@ -2,6 +2,8 @@ package com.will.filesearcher;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Environment;
+import android.support.annotation.NonNull;
 
 import com.will.filesearcher.delegate.FileSearcherDelegateActivity;
 import com.will.filesearcher.filter.FileFilter;
@@ -20,9 +22,18 @@ public class FileSearcher  {
     private final FileFilter fileFilter = new FileFilter();
     private final Context context;
     public static FileSearcherCallback callback;
-    public FileSearcher(File path,Context context){
+
+    /**
+     *
+     * @param path search path
+     * @param context context
+     */
+    public FileSearcher(@NonNull Context context,@NonNull File path){
         this.path = path;
         this.context = context;
+    }
+    public FileSearcher(@NonNull Context context){
+        this(context,Environment.getExternalStorageDirectory());
     }
 
     /**
@@ -41,7 +52,7 @@ public class FileSearcher  {
      * @param extension  extension,such as txt,jpg.
      * @return itself
      */
-    public FileSearcher withExtension(String extension){
+    public FileSearcher withExtension(@NonNull String extension){
         fileFilter.withExtension(extension);
         return this;
     }
@@ -51,7 +62,7 @@ public class FileSearcher  {
      * @param keyword keyword
      * @return itself
      */
-    public FileSearcher withKeyword(String keyword){
+    public FileSearcher withKeyword(@NonNull String keyword){
         fileFilter.withKeyword(keyword);
         return this;
     }
@@ -67,6 +78,9 @@ public class FileSearcher  {
     }
 
     public void search(FileSearcherCallback callback){
+        if(path == null && !path.isDirectory()){
+            throw new IllegalArgumentException("the path must be a valid directory and non null!");
+        }
         this.callback = callback;
         Intent intent = new Intent(context,FileSearcherDelegateActivity.class);
         intent.putExtra(FILE_FILTER,fileFilter);
