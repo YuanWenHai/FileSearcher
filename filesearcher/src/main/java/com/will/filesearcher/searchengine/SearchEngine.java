@@ -57,7 +57,7 @@ public class SearchEngine {
         this.callback = callback;
     }
     private void findFileRecursively(final File file,final SearchEngineCallback callback){
-        if(stop){
+        if(stop || !filter.isShowHidden() && file.getName().startsWith(".")){
             return;
         }
         //Log.d("file name",file.getName());

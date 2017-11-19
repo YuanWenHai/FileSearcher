@@ -30,6 +30,9 @@ public class FileFilter implements Serializable{
         //Log.d("fileFilter",file.getName());
         return sizeFilter(file) && extensionFilter(file) && keywordFilter(file) && hiddenFileFilter(file);
     }
+    public boolean isShowHidden(){
+        return showHidden;
+    }
     private boolean sizeFilter(File file){
         boolean sizeResult;
         sizeResult = file.length() >= minimumSize;
@@ -39,14 +42,14 @@ public class FileFilter implements Serializable{
         return sizeResult;
     }
     private boolean extensionFilter(File file){
-        if(extension == null){
+        if(extension == null || extension.isEmpty()){
             return true;
         }
         String fileName = file.getName();
         return fileName.contains(".") && fileName.substring(fileName.lastIndexOf(".")+1,fileName.length()).toUpperCase().equals(extension.toUpperCase());
     }
     private boolean keywordFilter(File file){
-        if(keyword == null){
+        if(keyword == null || keyword.isEmpty() ){
             return true;
         }
         String fileName = file.getName();

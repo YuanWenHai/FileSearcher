@@ -12,14 +12,15 @@
         app:title="@string/file_searcher_searching"
         app:contentInsetStartWithNavigation="0dp"
         app:titleTextAppearance="@style/FileSearcherToolbarTitleAppearance"
-        app:subtitle="abc"
+        app:subtitle="searching"
         app:subtitleTextAppearance="@style/FileSearcherToolbarSubtitleAppearance">
     </android.support.v7.widget.Toolbar>
     <android.support.v7.widget.RecyclerView
         android:id="@+id/file_searcher_main_recycler_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/file_searcher_main_toolbar"/>
+        android:layout_below="@id/file_searcher_main_toolbar"
+        android:scrollbars="vertical"/>
 
 
         <android.support.design.widget.FloatingActionButton

@@ -11,5 +11,5 @@
     <string name="select_all">全选</string>
     <string name="file_searcher_searching">"正在搜索目录: "</string>
     <string name="file_searcher_cancel">取消</string>
-
+    <string name="file_searcher_searching_completed">搜索完成</string>
 </resources>

@@ -30,5 +30,6 @@
     </style>
     <style name="FileSearcherToolbarSubtitleAppearance" parent="TextAppearance.Widget.AppCompat.Toolbar.Subtitle">
         <item name="android:textColor">@color/fileSearcherWhite</item>
+        <item name="android:textSize">12sp</item>
     </style>
 </resources>

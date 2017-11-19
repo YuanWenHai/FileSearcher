@@ -16,7 +16,7 @@ import java.util.List;
  */
 
 public class FileSearcher  {
-    private final File path;
+    private File path;
     static final String FILE_FILTER = "file_filter";
     static final String SEARCH_PATH = "search_path";
     private final FileFilter fileFilter = new FileFilter();
@@ -25,15 +25,10 @@ public class FileSearcher  {
 
     /**
      *
-     * @param path search path
      * @param context context
      */
-    public FileSearcher(@NonNull Context context,@NonNull File path){
-        this.path = path;
-        this.context = context;
-    }
     public FileSearcher(@NonNull Context context){
-        this(context,Environment.getExternalStorageDirectory());
+        this.context = context;
     }
 
     /**
@@ -76,10 +71,20 @@ public class FileSearcher  {
         fileFilter.showHidden(showHidden);
         return this;
     }
+    public FileSearcher withRootPath(File path){
+        this.path = path;
+        return this;
+    }
 
+    /**
+     * search with specified conditions,if passed path is invalid,an IllegalStatementException will be thrown.
+     * @param callback
+     */
     public void search(FileSearcherCallback callback){
-        if(path == null && !path.isDirectory()){
-            throw new IllegalArgumentException("the path must be a valid directory and non null!");
+        if(path == null){
+            path = Environment.getExternalStorageDirectory();
+        }else if(!path.isDirectory()){
+            throw new IllegalArgumentException("the path must be a directory");
         }
         this.callback = callback;
         Intent intent = new Intent(context,FileSearcherDelegateActivity.class);

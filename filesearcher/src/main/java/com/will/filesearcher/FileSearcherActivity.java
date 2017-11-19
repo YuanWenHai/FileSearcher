@@ -108,7 +108,7 @@ public class FileSearcherActivity extends AppCompatActivity{
 
             @Override
             public void onSearchDirectory(File file) {
-                toolbar.setTitle(getString(com.will.filesearcher.R.string.file_searcher_searching)+ file.getPath().replace(Environment.getExternalStorageDirectory().getPath(),""));
+                toolbar.setSubtitle( file.getPath().replace(Environment.getExternalStorageDirectory().getPath()+File.separator,""));
             }
 
             @Override
@@ -117,6 +117,7 @@ public class FileSearcherActivity extends AppCompatActivity{
                     emptyView.setVisibility(View.VISIBLE);
                 }
                 toolbar.setTitle("0/"+adapter.getItemCount());
+                toolbar.setSubtitle(getString(com.will.filesearcher.R.string.file_searcher_searching_completed));
             }
         });
     }
