@@ -42,10 +42,6 @@ public class FileSearcherActivity extends AppCompatActivity{
         searchEngine.start();
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-    }
 
     private void initializeView(){
         emptyView = findViewById(R.id.file_searcher_main_no_result_found);
@@ -102,8 +98,8 @@ public class FileSearcherActivity extends AppCompatActivity{
         searchEngine = new SearchEngine(path,filter);
         searchEngine.setCallback(new SearchEngine.SearchEngineCallback() {
             @Override
-            public void onFind(FileItem item) {
-                adapter.addItem(item);
+            public void onFind(List<FileItem> items) {
+                adapter.addItem(items);
             }
 
             @Override

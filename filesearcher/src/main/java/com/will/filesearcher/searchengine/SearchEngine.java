@@ -2,10 +2,13 @@ package com.will.filesearcher.searchengine;
 
 import android.os.Handler;
 import android.os.Looper;
+import android.os.SystemClock;
 
 import com.will.filesearcher.filter.FileFilter;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Will on 2017/11/1.
@@ -14,29 +17,24 @@ import java.io.File;
 public class SearchEngine {
     private final File path;
     private final FileFilter filter;
-    private final android.os.Handler handler;
     private boolean isSearching;
     private volatile boolean stop;
     private SearchEngineCallback callback;
+    private CallbackExecutor callbackExecutor;
 
     public SearchEngine(File path, FileFilter filter){
         this.path = path;
         this.filter = filter;
-        handler = new Handler(Looper.myLooper());
     }
     public void start(final SearchEngineCallback callback){
         isSearching = true;
         stop = false;
+        callbackExecutor = new CallbackExecutor(callback,200);
         new Thread(new Runnable() {
             @Override
             public void run() {
-                findFileRecursively(path,callback);
-                System.out.println(handler.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        callback.onFinish();
-                    }
-                }));
+                findFileRecursively(path);
+                callbackExecutor.onFinish();
                 isSearching = false;
             }
         }).start();
@@ -56,7 +54,7 @@ public class SearchEngine {
     public void setCallback(SearchEngineCallback callback){
         this.callback = callback;
     }
-    private void findFileRecursively(final File file,final SearchEngineCallback callback){
+    private void findFileRecursively(final File file){
         if(stop || !filter.isShowHidden() && file.getName().startsWith(".")){
             return;
         }
@@ -64,31 +62,21 @@ public class SearchEngine {
         if(file.isDirectory() ){
             File[] files = file.listFiles();
             if(files != null){
-                handler.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        callback.onSearchDirectory(file);
-                    }
-                });
+                callbackExecutor.onSearchDirectory(file);
                 for(File f : files){
-                    findFileRecursively(f,callback);
+                    findFileRecursively(f);
                 }
             }
         }else{
             if(filter.filter(file)){
-                final FileItem item = new FileItem(file);
-                handler.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        callback.onFind(item);
-                    }
-                });
-
+                FileItem item = new FileItem(file);
+                callbackExecutor.onFind(item);
             }
         }
     }
+
     public interface SearchEngineCallback{
-        void onFind(FileItem fileItem);
+        void onFind(List<FileItem> fileItems);
         void onSearchDirectory(File file);
         void onFinish();
     }

@@ -57,7 +57,10 @@ public class FileSearcherAdapter extends RecyclerView.Adapter<FileSearcherAdapte
 
     public void addItem(FileItem item){
         items.add(item);
-        //maybe batched?
+        notifyDataSetChanged();
+    }
+    public void addItem(List<FileItem> item){
+        items.addAll(item);
         notifyDataSetChanged();
     }
 
