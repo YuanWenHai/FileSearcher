@@ -9,7 +9,7 @@
         android:id="@+id/file_searcher_item_image_view"
         android:layout_width="47dp"
         android:layout_height="70dp"
-        android:src="@com.will.filesearcher:drawable/file_searcher_file_icon"/>
+        android:src="@drawable/file_searcher_file_icon"/>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

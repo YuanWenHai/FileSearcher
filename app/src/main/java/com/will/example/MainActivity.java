@@ -46,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
                         .search(new FileSearcher.FileSearcherCallback() {
                     @Override
                     public void onSelect(List<File> files) {
-                        Toast.makeText(MainActivity.this, files.size()+"", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(MainActivity.this, "you have selected "+files.size()+" file(s).", Toast.LENGTH_SHORT).show();
                     }
                 });
             }
